@@ -16,78 +16,135 @@
     <Filter Include="Arquivos de Recurso\GameState">
       <UniqueIdentifier>{3d9d8d39-3545-4e47-b67a-1f7b2093dcd8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Arquivos de Recurso\GUI">
+      <UniqueIdentifier>{0e798d2a-4fa5-4eab-a264-113cac0a26b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\InputHandler">
+      <UniqueIdentifier>{beaef9d0-aeea-402d-b790-bc18386b99d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\Map">
+      <UniqueIdentifier>{d6ef9d06-a92c-4152-8840-1cab16621664}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\Entities">
+      <UniqueIdentifier>{5e26e9f6-d597-4819-abf6-7d7cf86d0dd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\Map\Dungeon Generation">
+      <UniqueIdentifier>{95c0dd84-187f-416e-99cc-0ebbf0a8528f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\Map\Dungeon Generation\BSP">
+      <UniqueIdentifier>{4b119b53-facd-4a5a-9eea-dc5eb22faa31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\Engine">
+      <UniqueIdentifier>{99b7da3e-e2f5-438a-a485-10807fc5b12a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\Entities\Item">
+      <UniqueIdentifier>{e2042dfa-5612-4b5a-8d79-f80a23e81e73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\Entities\Character">
+      <UniqueIdentifier>{b3e9eeb5-986f-4e13-916d-6b0dcbd33b4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Recurso\Entities\Character\AI">
+      <UniqueIdentifier>{263d3093-46fa-45a7-8e1a-0f3c79db24ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Entidade.h">
+    <ClInclude Include="include\GUI.h">
+      <Filter>Arquivos de Recurso\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Message.h">
+      <Filter>Arquivos de Recurso\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Bar.h">
+      <Filter>Arquivos de Recurso\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\InputHandler.h">
+      <Filter>Arquivos de Recurso\InputHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="include\hash_pair.h">
+      <Filter>Arquivos de Recurso\InputHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Map.h">
+      <Filter>Arquivos de Recurso\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Tile.h">
+      <Filter>Arquivos de Recurso\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Entity.h">
+      <Filter>Arquivos de Recurso\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Pathfinding.h">
       <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BSP.h">
+      <Filter>Arquivos de Recurso\Map\Dungeon Generation\BSP</Filter>
     </ClInclude>
     <ClInclude Include="include\Engine.h">
+      <Filter>Arquivos de Recurso\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RNG.h">
+      <Filter>Arquivos de Recurso\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HelperFunctions.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="include\Mapa.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+    <ClInclude Include="include\AI.h">
+      <Filter>Arquivos de Recurso\Entities\Character\AI</Filter>
     </ClInclude>
-    <ClInclude Include="include\AttributeComponent.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+    <ClInclude Include="include\Item.h">
+      <Filter>Arquivos de Recurso\Entities\Item</Filter>
     </ClInclude>
-    <ClInclude Include="include\Pegavel.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+    <ClInclude Include="include\Inventory.h">
+      <Filter>Arquivos de Recurso\Entities\Item</Filter>
     </ClInclude>
-    <ClInclude Include="include\GUI.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AIComponent.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Mensagem.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="include\IA.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ManipuladorDeEntrada.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Globais.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+    <ClInclude Include="include\Stats.h">
+      <Filter>Arquivos de Recurso\Entities\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Entidade.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mapa.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AttributeComponent.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Pegavel.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GUI.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AIComponent.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Mensagem.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IA.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ManipuladorDeEntrada.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Creditos.cpp">
       <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI.cpp">
+      <Filter>Arquivos de Recurso\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Message.cpp">
+      <Filter>Arquivos de Recurso\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Bar.cpp">
+      <Filter>Arquivos de Recurso\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pathfinding.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Map.cpp">
+      <Filter>Arquivos de Recurso\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tile.cpp">
+      <Filter>Arquivos de Recurso\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entity.cpp">
+      <Filter>Arquivos de Recurso\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BSP.cpp">
+      <Filter>Arquivos de Recurso\Map\Dungeon Generation\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine.cpp">
+      <Filter>Arquivos de Recurso\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AI.cpp">
+      <Filter>Arquivos de Recurso\Entities\Character\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Item.cpp">
+      <Filter>Arquivos de Recurso\Entities\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Inventory.cpp">
+      <Filter>Arquivos de Recurso\Entities\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Stats.cpp">
+      <Filter>Arquivos de Recurso\Entities\Character</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

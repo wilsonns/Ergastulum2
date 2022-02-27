@@ -5,49 +5,47 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <vector>
+
 #include "Engine.h"
-#include "Mensagem.h"
+#include "Message.h"
+#include "Bar.h"
 
-class Mensagem;
+class Message;
 class Engine;
-
-
-struct Barra
-{
-	Barra(float x, float y, float largura, float altura, float larguraBorda,sf::Color corInterna, sf::Color corBorda = sf::Color::Black);
-	void largura(float novaLargura);
-
-	sf::RectangleShape barra;
-};
+struct Bar;
 
 class GUI
 {
 public:
-	GUI(float x, float y, float largura, float altura, sf::Color corInterna
-		, sf::Color corBorda, sf::RenderTarget* janela, Engine*engine);
+	//Constructors & Destructors
+	GUI(float x, float y, float width, float height, sf::Color innerColor
+		, sf::Color outlineColor, sf::RenderTarget* window, Engine*engine);
 	~GUI();
 
-	std::map<sf::String, std::unique_ptr<sf::Font>> m_fontes;
+	//Accessors
+	sf::Font *font(sf::String font);
 
-	bool adcionarFonte(sf::String arquivo);
-	void adcionarTexto(float x, float y,int tamanho, sf::String texto, sf::Font& fonte, sf::Color cor);
-
-	void adcionarMensagem(sf::String texto, sf::Font& fonte, sf::Color cor);
-
-	void atualizar(sf::RectangleShape& caixa, std::vector<std::unique_ptr<Mensagem>>*mensagens);
-	void render(sf::RenderTarget* janela);
+	//Functions
+	void update(sf::RectangleShape& box, std::vector<std::unique_ptr<Message>>*messages);
+	void render(sf::RenderTarget* window);
+	bool addFont(sf::String file);
+	void addText(float x, float y, int size, sf::String label, sf::String text, sf::Font *fonte, sf::Color cor);
+	void addMessage(sf::String text, sf::Font* font, sf::Color color);
 
 	
 private:
-	std::vector<std::unique_ptr<Barra>> m_barras;
-	sf::RectangleShape m_painel;
-	std::vector<std::unique_ptr<sf::Text>> m_texto;
+	//Assets
+	sf::RectangleShape m_panel;
 	
-	sf::RectangleShape m_caixaDeMensagens;
-	std::vector<std::unique_ptr<Mensagem>> m_mensagens;
+	std::map<sf::String, std::unique_ptr<sf::Font>> m_fonts;
+	std::map<sf::String,std::unique_ptr<Bar>> m_bars;
+	std::map<sf::String, std::unique_ptr<sf::Text>> m_text;
+		
+	sf::RectangleShape m_messageBox;
+	std::vector<std::unique_ptr<Message>> m_messages;
 
-	sf::Color m_corInterna;
-	sf::Color m_corBorda;
+	sf::Color m_innerColor;
+	sf::Color m_outlineColor;
 	Engine* m_engine;
 
 

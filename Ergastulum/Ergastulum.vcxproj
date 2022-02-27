@@ -151,31 +151,40 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\AIComponent.h" />
-    <ClInclude Include="include\AttributeComponent.h" />
+    <ClInclude Include="include\Stats.h" />
+    <ClInclude Include="include\Bar.h" />
+    <ClInclude Include="include\BSP.h" />
     <ClInclude Include="include\Engine.h" />
-    <ClInclude Include="include\Entidade.h" />
-    <ClInclude Include="include\Globais.h" />
+    <ClInclude Include="include\Entity.h" />
     <ClInclude Include="include\GUI.h" />
-    <ClInclude Include="include\IA.h" />
-    <ClInclude Include="include\ManipuladorDeEntrada.h" />
-    <ClInclude Include="include\Mapa.h" />
-    <ClInclude Include="include\Mensagem.h" />
-    <ClInclude Include="include\Pegavel.h" />
+    <ClInclude Include="include\AI.h" />
+    <ClInclude Include="include\hash_pair.h" />
+    <ClInclude Include="include\HelperFunctions.h" />
+    <ClInclude Include="include\InputHandler.h" />
+    <ClInclude Include="include\Inventory.h" />
+    <ClInclude Include="include\Item.h" />
+    <ClInclude Include="include\Map.h" />
+    <ClInclude Include="include\Message.h" />
+    <ClInclude Include="include\Pathfinding.h" />
+    <ClInclude Include="include\RNG.h" />
+    <ClInclude Include="include\Tile.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bar.cpp" />
     <ClCompile Include="Creditos.cpp" />
-    <ClCompile Include="src\AIComponent.cpp" />
-    <ClCompile Include="src\AttributeComponent.cpp" />
+    <ClCompile Include="src\Stats.cpp" />
+    <ClCompile Include="src\BSP.cpp" />
     <ClCompile Include="src\Engine.cpp" />
-    <ClCompile Include="src\Entidade.cpp" />
+    <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\GUI.cpp" />
-    <ClCompile Include="src\IA.cpp" />
+    <ClCompile Include="src\AI.cpp" />
+    <ClCompile Include="src\Inventory.cpp" />
+    <ClCompile Include="src\Item.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\ManipuladorDeEntrada.cpp" />
-    <ClCompile Include="src\Mapa.cpp" />
-    <ClCompile Include="src\Mensagem.cpp" />
-    <ClCompile Include="src\Pegavel.cpp" />
+    <ClCompile Include="src\Map.cpp" />
+    <ClCompile Include="src\Message.cpp" />
+    <ClCompile Include="src\Pathfinding.cpp" />
+    <ClCompile Include="src\Tile.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

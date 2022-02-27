@@ -3,17 +3,23 @@
 //Constructors & Desctructors
 Engine::Engine(const int width, const int height, const int guiHeight, unsigned int tileSize, unsigned int tileGap)
 {
+	m_gameState = START;
 	this->m_tileSize = tileSize;
+	Entity::spriteSize(tileSize);
 	m_window = std::make_unique<sf::RenderWindow>(sf::VideoMode(width, height), "Ergastulum:Histórias de X e Y");
-	texture(loadTexture("Assets/Graphics/Entities/Personagens.png"), "Entidades");
-	texture(loadTexture("Assets/Graphics/Terreno/Dummy.png"), "Dummy");
-	texture(loadTexture("Assets/Graphics/Terreno/Dummywall.png"), "Dummywall");
-	makeTileSet(texture("Dummy"), tileSize, tileGap,m_terrainSprites);
-	makeTileSet(texture("Dummywall"), tileSize, tileGap, m_terrainSprites);
-	makeTileSet(texture("Entidades"), tileSize, tileGap, m_terrainSprites);
-	this->initMap();
+	texture(loadTexture("Assets/Graphics/Entities/Entities.png"), "Entities");
+	texture(loadTexture("Assets/Graphics/Terrain/Dummy.png"), "Dummy");
+	texture(loadTexture("Assets/Graphics/Terrain/Dummywall.png"), "Dummywall");
+	m_spritesheets["Entities"];
+	m_spritesheets["Terrain"];
+	makeTileSet(texture("Entities"), tileSize, tileGap, spritesheet("Entities"));
+	makeTileSet(texture("Dummy"), tileSize, tileGap, spritesheet("Terrain"));
+	makeTileSet(texture("Dummywall"), tileSize, tileGap, spritesheet("Terrain"));
 	m_gui = new GUI(0, (height-guiHeight), height, guiHeight,sf::Color::White,sf::Color::Black, m_window.get() , this);
-		
+	this->m_fixed = m_window.get()->getView();
+	this->m_view = m_fixed;
+	this->m_handler = std::make_unique<InputHandler>();
+	RNG::seed();
 	return;
 }
 
@@ -26,8 +32,29 @@ Engine::~Engine()
 //Functions
 void Engine::update()
 {
-	this->m_currentMap.get()->update();
-		
+	m_currentMap.get()->update();
+	if (m_gameState == START || m_gameState == PLAYER_TURN)
+	{
+		m_player->FOV();
+		m_player->update();
+	}
+	else if (m_gameState == ENEMY_TURN)
+	{
+		for (std::vector<std::unique_ptr<Entity>>::iterator it = m_entities.begin();
+			it != m_entities.end();it++)
+		{
+			if ((*it).get() == m_player)
+			{
+				continue;
+			}
+			else
+			{
+				(*it).get()->update();
+
+			}
+		}
+		m_gameState = PLAYER_TURN;
+	}
 	return;
 }
 
@@ -35,17 +62,30 @@ void Engine::render()
 {
 	m_window->clear();
 	
-
+	m_window.get()->setView(m_view);
+	m_view.setCenter(sf::Vector2f((float)(m_player->pos().x*m_tileSize), (float)((m_player->pos().y*m_tileSize)+(m_tileSize*3))));
 	m_currentMap->render(m_window.get());
-	
+	for (auto& entity : m_entities)
+	{
+		if (currentMap()->tile(entity.get()->pos())->visible())
+		{
+			m_window->draw(*entity.get()->sprite());
+		}
+	}
+	m_window.get()->setView(m_fixed);
 	m_gui->render(m_window.get());
-
-	m_window->display();
+	m_window.get()->display();
 	return;
 }
 
 
 //Accessors
+/**Returns the size of the Tiles in the grid*/
+int Engine::tileSize()
+{
+	return m_tileSize;
+}
+
 /**Returns a sf::Texture from the m_textures map.*/
 sf::Texture* Engine::texture(std::string st)
 {
@@ -98,19 +138,56 @@ sf::Sprite Engine::makeSprite(sf::Texture *texture, sf::IntRect rect)
 * int sp is the index.
 * map sprites is the map.
 */
-sf::Sprite Engine::sprite(unsigned int sp, std::map<unsigned int,std::unique_ptr<sf::Sprite>>sprites)
+sf::Sprite Engine::sprite(unsigned int sp,sf::String map)
 {
-	return *sprites[sp].get();
+	return *m_spritesheets[map][sp].get();
+}
+
+/**Gets m_player.*/
+Entity* Engine::player()
+{
+	return m_player;
+}
+
+/** Returns correntMap.*/
+Map* Engine::currentMap()
+{
+
+	return m_currentMap.get();
+}
+
+/**Returns GUI*/
+GUI* Engine::gui()
+{
+	return m_gui;
+}
+
+/**Returns a std::map which stores unique ptrs to sf::Sprites, in other words, a spritesheet.*/
+std::map<unsigned int, std::unique_ptr<sf::Sprite>>* Engine::spritesheet(sf::String index) 
+{
+	return (&m_spritesheets[index]);
 }
 
 
-//Mutadores
-/**Checks if a texture exists within the texture map. If it doesn't, adds it.*/
-void Engine::textura(sf::Texture textura, std::string st)
+/**Returns the sf::RenderWindow * window*/
+sf::RenderWindow* Engine::window()
 {
-	if (m_texturas.find(st) == m_texturas.end())
+	return m_window.get();
+}
+
+/**Returns the input handler*/
+InputHandler* Engine::handler()
+{
+	return m_handler.get();
+}
+
+//Mutators
+/**Checks if a texture exists within the texture map. If it doesn't, adds it.*/
+void Engine::texture(sf::Texture texture, std::string st)
+{
+	if (m_textures.find(st) == m_textures.end())
 	{
-		m_texturas.insert(std::make_pair(st, std::make_unique<sf::Texture>(textura)));
+		m_textures.insert(std::make_pair(st, std::make_unique<sf::Texture>(texture)));
 	}
 	else
 	{
@@ -118,32 +195,16 @@ void Engine::textura(sf::Texture textura, std::string st)
 	}
 }
 
-/**Deprecated*/
-void Engine::sprite(sf::String sprite, sf::Texture* textura, sf::IntRect retangulo)
-{
-	/*sf::Sprite sp;
-	sp.setTexture(*textura);
-	sp.setTextureRect(retangulo);
-	if (m_sprites.find(sprite) == m_sprites.end())
-	{
-		m_sprites.insert(std::make_pair(sprite, std::make_unique<sf::Sprite>(sp)));
-	}
-	else
-	{
-		std::cout << "Sprite com esse nome ja existe!" << std::endl;
-	}*/
-}
-
 /**
 * Makes a tileset from a texture.
-* *texture is a pointer to a sf::Texture.
+* sf::Texture *texture is a pointer to a sf::Texture.
 * int tileSize is the size of each tile in pixels.
 * int tileGap is the gap between each tile in the texture. 0 if there is no gap.
 * map sprites  is a given map to add the sprites to.
 */
 void Engine::makeTileSet(sf::Texture* texture, unsigned int tileSize, unsigned int tileGap, std::map<unsigned int, std::unique_ptr<sf::Sprite>>* sprites)
 {
-	int it = sprites->size();
+	size_t it = sprites->size();
 	int xGap = 1;
 	int yGap = 0;
 	int tiles = (texture->getSize().x / tileSize) * (texture->getSize().y / tileSize);
@@ -164,46 +225,35 @@ void Engine::makeTileSet(sf::Texture* texture, unsigned int tileSize, unsigned i
 	}
 	if (debug)
 	{
-		sf::RenderTexture tileset;
-		tileset.create(24, sprites.size() * tileSize);
-		sf::Text text;
-		sf::Font arial;
-		arial.loadFromFile("Recursos/Arial.ttf");
-		text.setFont(arial);
-		text.setCharacterSize(7);
-		text.setFillColor(sf::Color::White);
-		tileset.clear(sf::Color::Black);
-		for (int i = 0; i < sprites.size();i++)
-		{
-			text.setString(std::to_string(i));
-			text.setPosition(sf::Vector2f(0, i * tileSize));
-			tileset.draw(text);
-			sf::Sprite sp = *sprites[i].get();
-			sp.setPosition(sf::Vector2f(tileSize, i * tileSize));
-			tileset.draw(sp);
-		}
-		tileset.getTexture().copyToImage().saveToFile("Recursos/Referencia.png");
+	
 	}
 	return;
 }
 
-Mapa* Engine::mapaAtual()
+/**Initializes a Map as the currentMap.*/
+void Engine::initMap(Engine* engine)
 {
-	
-	return m_mapaAtual.get();
+	m_currentMap = std::make_unique<Map>();
+	currentMap()->engine(engine);
+	currentMap()->init(20, 20,m_tileSize, this);
 }
 
-void Engine::inicMapa()
+/** Sets an Entity as the m_player.*/
+void Engine::player(Entity* player)
 {
-	m_mapaAtual = std::make_unique<Mapa>(30, 25, *this);
+	m_player = player;
 }
 
-void Engine::jogador(Entidade* Jogador)
+/**Adds an entity to the map in a given position.*/
+void Engine::addEntity(sf::String name, sf::Vector2i pos, sf::Sprite sprite)
 {
-	m_jogador = Jogador;
+	std::unique_ptr<Entity> entity;
+	entity = std::make_unique<Entity>(name, pos, sprite);
+	currentMap()->tile(pos)->occupant(entity.get());
+	m_entities.push_back(std::move(entity));
 }
 
-Entidade* Engine::jogador()
+void Engine::gameState(GameStates gameState)
 {
-	return m_jogador;
+	m_gameState = gameState;
 }
