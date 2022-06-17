@@ -5,14 +5,15 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <vector>
+#include <memory>
 
-#include "Engine.h"
-#include "Message.h"
-#include "Bar.h"
 
 class Message;
 class Engine;
+class Item;
 struct Bar;
+class Menu;
+class InventoryMenu;
 
 class GUI
 {
@@ -24,31 +25,28 @@ public:
 
 	//Accessors
 	sf::Font *font(sf::String font);
+	Menu* menu(sf::String label);
 
 	//Functions
-	void update(sf::RectangleShape& box, std::vector<std::unique_ptr<Message>>*messages);
-	void render(sf::RenderTarget* window);
+	//General Functions
 	bool addFont(sf::String file);
-	void addText(float x, float y, int size, sf::String label, sf::String text, sf::Font *fonte, sf::Color cor);
-	void addMessage(sf::String text, sf::Font* font, sf::Color color);
 
+	//Update Functions
+	void update();
+
+	//Render Functions
+	void render(sf::RenderTarget* window);
+	
 	
 private:
 	//Assets
-	sf::RectangleShape m_panel;
-	
+	// General Assets
 	std::map<sf::String, std::unique_ptr<sf::Font>> m_fonts;
-	std::map<sf::String,std::unique_ptr<Bar>> m_bars;
-	std::map<sf::String, std::unique_ptr<sf::Text>> m_text;
-		
-	sf::RectangleShape m_messageBox;
-	std::vector<std::unique_ptr<Message>> m_messages;
-
-	sf::Color m_innerColor;
-	sf::Color m_outlineColor;
+	
+	//MENUS
+	std::map<sf::String,std::unique_ptr<Menu>> m_menus;
+	
 	Engine* m_engine;
-
-
 };
 
 #endif

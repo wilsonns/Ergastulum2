@@ -1,0 +1,16 @@
+{
+  "dummy": {
+    "name": "Dummy",
+    "sprite": 1,
+    "type": 2,
+    "description": "Dummy Item yay!",
+    "attributes": {
+      "Weight": 100,
+      "Size": 10,
+      "Attack": 10,
+      "Damage": 100
+    },
+    "inventory": 0
+
+  }
+}

@@ -3,39 +3,50 @@
 
 #include "Entity.h"
 
-class Item
+class Engine;
+class Entity;
+class Character;
+class AttributeComponent;
+class ResourceComponent;
+
+class Item : public Entity
 {
 public:
 	//Constructors & Destructors
 	Item(sf::String name, sf::Vector2i pos, 
-		sf::Sprite sprite, int size, int weight ,Entity* owner = nullptr);
+		sf::Sprite sprite, AttributeComponent attributes, Entity* owner = nullptr);
+	Item(const json& file, sf::String name, sf::Vector2i pos);
+	Item(const Item& copy);
+	Item();
 	~Item();
 
 	//Accessors
-	int size();
-	int weight();
+	sf::String description();
+	Entity* owner();
 
 	//Mutators
-	void size(int size);
-	void weight(int weight);
+	void description(sf::String description);
+	void owner(Entity* owner);
 
 	//Functions
-	virtual bool use(Entity *owner);
+	virtual void render(sf::RenderTarget* window);
+	virtual bool use(Character *owner);
 	
 private:
-	int m_size;
-	int m_weight;
 
-
-	sf::String m_name;
-	sf::String description;
-	sf::Sprite m_sprite;
-	sf::Vector2i m_pos;
-
-	static int m_spriteSize;
-	static Engine* m_engine;
-
+	Entity* m_owner;
+	sf::String m_description;
+protected:
+	unsigned int m_slot;
 };
 
+
+class Weapon : public Item
+{
+public:
+	using Item::Item;
+	bool use(Character* owner);
+private:
+};
 
 #endif

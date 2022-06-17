@@ -46,6 +46,9 @@
     <Filter Include="Arquivos de Recurso\Entities\Character\AI">
       <UniqueIdentifier>{263d3093-46fa-45a7-8e1a-0f3c79db24ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Arquivos de Recurso\GUI\Menu">
+      <UniqueIdentifier>{660d2e39-9e85-4aaa-92eb-1762543917d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GUI.h">
@@ -75,9 +78,6 @@
     <ClInclude Include="include\Pathfinding.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="include\BSP.h">
-      <Filter>Arquivos de Recurso\Map\Dungeon Generation\BSP</Filter>
-    </ClInclude>
     <ClInclude Include="include\Engine.h">
       <Filter>Arquivos de Recurso\Engine</Filter>
     </ClInclude>
@@ -98,6 +98,42 @@
     </ClInclude>
     <ClInclude Include="include\Stats.h">
       <Filter>Arquivos de Recurso\Entities\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BSP.h">
+      <Filter>Arquivos de Recurso\Map\Dungeon Generation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FOV.h">
+      <Filter>Arquivos de Recurso\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nlohmann\json.hpp">
+      <Filter>Arquivos de Recurso\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Menu.h">
+      <Filter>Arquivos de Recurso\GUI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="include\InventoryMenu.h">
+      <Filter>Arquivos de Recurso\GUI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Color.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Character.h">
+      <Filter>Arquivos de Recurso\Entities\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AnimationComponent.h">
+      <Filter>Arquivos de Recurso\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Textbox.h">
+      <Filter>Arquivos de Recurso\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MainMenu.h">
+      <Filter>Arquivos de Recurso\GUI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Button.h">
+      <Filter>Arquivos de Recurso\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameInterface.h">
+      <Filter>Arquivos de Recurso\GUI\Menu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -128,9 +164,6 @@
     <ClCompile Include="src\Entity.cpp">
       <Filter>Arquivos de Recurso\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="src\BSP.cpp">
-      <Filter>Arquivos de Recurso\Map\Dungeon Generation\BSP</Filter>
-    </ClCompile>
     <ClCompile Include="src\Engine.cpp">
       <Filter>Arquivos de Recurso\Engine</Filter>
     </ClCompile>
@@ -145,6 +178,36 @@
     </ClCompile>
     <ClCompile Include="src\Stats.cpp">
       <Filter>Arquivos de Recurso\Entities\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BSP.cpp">
+      <Filter>Arquivos de Recurso\Map\Dungeon Generation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FOV.cpp">
+      <Filter>Arquivos de Recurso\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Menu.cpp">
+      <Filter>Arquivos de Recurso\GUI\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InventoryMenu.cpp">
+      <Filter>Arquivos de Recurso\GUI\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Character.cpp">
+      <Filter>Arquivos de Recurso\Entities\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AnimationComponent.cpp">
+      <Filter>Arquivos de Recurso\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Textbox.cpp">
+      <Filter>Arquivos de Recurso\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainMenu.cpp">
+      <Filter>Arquivos de Recurso\GUI\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Button.cpp">
+      <Filter>Arquivos de Recurso\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameInterface.cpp">
+      <Filter>Arquivos de Recurso\GUI\Menu</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

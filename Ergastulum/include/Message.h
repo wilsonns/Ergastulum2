@@ -12,7 +12,7 @@ class Message
 {
 public:
 	//Constructors & Destructors
-	Message(sf::String text, sf::Font* font, sf::Color color);
+	Message(sf::String text, sf::Font* font, sf::Color color, sf::Color outlineColor);
 	~Message();
 
 	//Accessors

@@ -1,5 +1,17 @@
 #include "AI.h"
 
+#include "SFML/Graphics.hpp"
+
+
+#include "Character.h"
+#include "Entity.h"
+#include "GUI.h"
+#include "Menu.h"
+#include "InventoryMenu.h"
+#include "Color.h"
+#include "Item.h"
+#include "InputHandler.h"
+
 Engine* AI::m_engine;
 
 PlayerAI::PlayerAI()
@@ -11,42 +23,88 @@ PlayerAI::PlayerAI(PlayerAI& copy)
 {
 }
 
-void PlayerAI::update(Entity* owner)
+void PlayerAI::update(Character* owner)
 {
-	int x, y;
-	x = 0;
-	y = 0;
-	if (m_engine->handler()->isKeyPressed(sf::Keyboard::Up))
+	//MOVIMENTACAO
+	if (m_engine->gameState(m_engine->CURRENT) == m_engine->PLAYER_TURN || m_engine->gameState(m_engine->CURRENT) == m_engine->GAME_START)
 	{
-		y--;
-	}
-	if (m_engine->handler()->isKeyPressed(sf::Keyboard::Down))
-	{
-		y++;
-	}
-	if (m_engine->handler()->isKeyPressed(sf::Keyboard::Left))
-	{
-		x--;
-	}
-	if (m_engine->handler()->isKeyPressed(sf::Keyboard::Right))
-	{
-		x++;
-	}
-	if (x != 0 || y != 0)
-	{
-		Tile* tile = m_engine->currentMap()->tile(sf::Vector2i(owner->pos().x + x, owner->pos().y + y));
-		if (m_engine->currentMap()->isWalkable(tile))
+
+		int x, y;
+		x = 0;
+		y = 0;
+		if (m_engine->handler()->isKeyPressed(sf::Keyboard::Up))
 		{
-			owner->move(sf::Vector2i(x, y));
+			y--;
 		}
-		else if (tile->occupant() != nullptr)
+		if (m_engine->handler()->isKeyPressed(sf::Keyboard::Down))
 		{
-			if (!tile->occupant()->died())
+			y++;
+		}
+		if (m_engine->handler()->isKeyPressed(sf::Keyboard::Left))
+		{
+			x--;
+		}
+		if (m_engine->handler()->isKeyPressed(sf::Keyboard::Right))
+		{
+			x++;
+		}
+
+		if (x != 0 || y != 0)
+		{
+			Tile* tile = m_engine->currentMap()->tile(sf::Vector2i(owner->pos().x + x, owner->pos().y + y));
+			if (m_engine->currentMap()->isWalkable(tile))
 			{
-				owner->attack(tile->occupant());
+				owner->move(sf::Vector2i(x, y));
+			}
+			else if (tile->occupant() != nullptr)
+			{
+				if (!tile->occupant()->died())
+				{
+					owner->attack(tile->occupant());
+				}
+			}
+			m_engine->gameState(m_engine->ENEMY_TURN);
+		}
+		//CHECK INVENTORY
+		Tile* tile = m_engine->currentMap()->tile(sf::Vector2i(owner->pos().x, owner->pos().y));
+		if (m_engine->handler()->isKeyPressed(sf::Keyboard::I))
+		{
+			m_engine->gameState(m_engine->INVENTORY_MENU);
+		}
+		if (m_engine->handler()->isKeyPressed(sf::Keyboard::G))
+		{
+			if (!tile->inventory()->contents()->empty())
+			{
+				Item* item = *tile->inventory()->contents()->begin();
+				owner->inventory()->addItem(item, owner);
+				tile->inventory()->removeItem(item);
+
 			}
 		}
-		m_engine->gameState(m_engine->ENEMY_TURN);
+		//CHECK CHARACTER SHEET
+		if (m_engine->handler()->isKeyPressed(sf::Keyboard::C))
+		{
+			m_engine->gameState(m_engine->CHARACTER_MENU);
+		}
+	}
+	else if (m_engine->gameState(m_engine->CURRENT) == m_engine->INVENTORY_MENU || m_engine->gameState(m_engine->CURRENT) == m_engine->CHARACTER_MENU)
+	{
+		if (m_engine->handler()->isKeyPressed(sf::Keyboard::Escape))
+		{
+			m_engine->gameState(m_engine->gameState(m_engine->PREVIOUS));
+		}
+		else
+		{
+			if (m_engine->handler()->isKeyPressed())
+			{
+				int choice = m_engine->handler()->getKeyChar();
+
+				m_engine->gui()->menu("gameInterface")->addMessage((char)choice + " pressed.", m_engine->gui()->font("Arial"), Color::Black, Color::Black);
+				owner->inventory()->contents()->at(choice)->use(owner);
+				// 
+				//PENDING	
+			}
+		}
 	}
 }
 
@@ -69,7 +127,7 @@ DummyAI::DummyAI(DummyAI& copy)
 
 }
 
-void DummyAI::update(Entity* owner)
+void DummyAI::update(Character* owner)
 {
 	
 	path = Pathfinding::findPath(owner->pos(), m_engine->player()->pos());

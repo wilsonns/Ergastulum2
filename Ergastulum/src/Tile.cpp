@@ -1,5 +1,7 @@
 #include "Tile.h"
 
+#include "Character.h"
+
 int Tile::m_spriteSize;
 
 //Constructors & Destructors
@@ -12,6 +14,8 @@ Tile::Tile(sf::Vector2i pos, sf::Sprite sprite, bool passable, bool opaque)
 	this->m_opaque = opaque;
 	this->m_visible = false;
 	this->m_explored = false;
+
+	this->m_inventory = std::make_unique<Inventory>(10);
 }
 
 Tile::~Tile()
@@ -53,10 +57,17 @@ bool Tile::visible()
 	return m_visible;
 }
 
-/**Returns the tile's occupant Entity.*/
-Entity* Tile::occupant()
+/**Returns the tile's occupant Character.*/
+Character* Tile::occupant()
 {
 	return m_occupant;
+}
+
+
+
+Inventory* Tile::inventory()
+{
+	return m_inventory.get();
 }
 
 //Mutators
@@ -95,7 +106,7 @@ void Tile::visible(bool visible)
 }
 
 /**Sets the tile's occupant Entity.*/
-void Tile::occupant(Entity* occupant)
+void Tile::occupant(Character* occupant)
 {
 	m_occupant = occupant;
 }

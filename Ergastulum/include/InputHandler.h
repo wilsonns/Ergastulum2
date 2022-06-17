@@ -60,6 +60,17 @@ public:
 		return p_key_pressed[key];
 	}
 
+	bool isKeyPressed()
+	{
+		for (auto& key : p_key_pressed)
+		{
+			if (key.second)
+			{
+				return true;
+			}
+		}
+	}
+
 	bool isKeyDown(sf::Keyboard::Key key)
 	{
 		return p_key_down[key];
@@ -170,6 +181,7 @@ private:
 				if (it.second)
 					it.second = false;
 			}
+			m_outputChar = NULL;
 		}
 	}
 
@@ -179,6 +191,10 @@ private:
 		{
 			p_key_pressed[event.key.code] = not p_key_down[event.key.code];
 			p_key_released[event.key.code] = false;
+			if (event.text.unicode < 127)
+			{
+				m_outputChar = event.text.unicode;
+			}
 			return true;
 		}
 		else if (event.type == sf::Event::KeyReleased)
@@ -194,6 +210,16 @@ private:
 	std::unordered_map<unsigned int, bool> p_key_pressed;
 	std::unordered_map<unsigned int, bool> p_key_down;
 	std::unordered_map<unsigned int, bool> p_key_released;
+	int m_outputChar;
+	
+public:
+	int getKeyChar()
+	{
+		return m_outputChar;
+	}
+
+
+
 #endif
 
 #if !(INPUT_DISABLE_MOUSE)

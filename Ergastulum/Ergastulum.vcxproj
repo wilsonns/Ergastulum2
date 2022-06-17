@@ -151,6 +151,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\AnimationComponent.h" />
+    <ClInclude Include="include\Button.h" />
+    <ClInclude Include="include\Character.h" />
+    <ClInclude Include="include\Color.h" />
+    <ClInclude Include="include\FOV.h" />
+    <ClInclude Include="include\GameInterface.h" />
+    <ClInclude Include="include\InventoryMenu.h" />
+    <ClInclude Include="include\MainMenu.h" />
+    <ClInclude Include="include\Menu.h" />
+    <ClInclude Include="include\nlohmann\json.hpp" />
     <ClInclude Include="include\Stats.h" />
     <ClInclude Include="include\Bar.h" />
     <ClInclude Include="include\BSP.h" />
@@ -167,11 +177,20 @@
     <ClInclude Include="include\Message.h" />
     <ClInclude Include="include\Pathfinding.h" />
     <ClInclude Include="include\RNG.h" />
+    <ClInclude Include="include\Textbox.h" />
     <ClInclude Include="include\Tile.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bar.cpp" />
     <ClCompile Include="Creditos.cpp" />
+    <ClCompile Include="src\AnimationComponent.cpp" />
+    <ClCompile Include="src\Button.cpp" />
+    <ClCompile Include="src\Character.cpp" />
+    <ClCompile Include="src\FOV.cpp" />
+    <ClCompile Include="src\GameInterface.cpp" />
+    <ClCompile Include="src\InventoryMenu.cpp" />
+    <ClCompile Include="src\MainMenu.cpp" />
+    <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\Stats.cpp" />
     <ClCompile Include="src\BSP.cpp" />
     <ClCompile Include="src\Engine.cpp" />
@@ -184,6 +203,7 @@
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Message.cpp" />
     <ClCompile Include="src\Pathfinding.cpp" />
+    <ClCompile Include="src\Textbox.cpp" />
     <ClCompile Include="src\Tile.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

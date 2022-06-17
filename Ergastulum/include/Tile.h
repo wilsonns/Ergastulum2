@@ -3,7 +3,10 @@
 
 #include <SFML/Graphics.hpp>
 
-class Entity;
+#include "Inventory.h"
+
+class Character;
+class Inventory;
 
 class Tile
 {
@@ -19,7 +22,8 @@ public:
 	bool opaque();
 	bool explored();
 	bool visible();
-	Entity* occupant();
+	Character* occupant();
+	Inventory* inventory();
 
 	//Mutators
 	void sprite(sf::Sprite sprite);
@@ -28,7 +32,7 @@ public:
 	void opaque(bool opaque);
 	void explored(bool explored);
 	void visible(bool visible);
-	void occupant(Entity* occupant);
+	void occupant(Character* occupant);
 	static void spriteSize(int spriteSize);
 
 private:
@@ -38,8 +42,10 @@ private:
 	bool m_opaque;
 	bool m_explored;
 	bool m_visible;
-	Entity* m_occupant;
+	Character* m_occupant;
 	static int m_spriteSize;
+	std::unique_ptr<Inventory> m_inventory;
+
 };
 
 #endif

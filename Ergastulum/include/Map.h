@@ -1,12 +1,14 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include <iostream>
+#include <fstream>
 #include "Tile.h"
 #include "BSP.h"
 #include "Engine.h"
 #include "AI.h"
 
-
+class Tile;
 class BSP;
 class Engine;
 
@@ -31,6 +33,7 @@ public:
 	void init(unsigned int width, unsigned int height, unsigned int spriteSize, Engine* engine);
 	bool isWalkable(Tile* tile);
 	bool occupant(sf::Vector2i pos);
+	void wall(Tile* tile);
 	void dig(Tile* tile);
 	void dig(int x, int y, int width, int height);
 	void createRoom(bool first, int x, int y, int width, int height);
@@ -45,6 +48,6 @@ private:
 	static int m_spriteSize;
 };
 
-//
+
 
 #endif

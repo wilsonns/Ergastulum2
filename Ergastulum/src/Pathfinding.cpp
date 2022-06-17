@@ -30,6 +30,7 @@ void Pathfinding::initPathfinding(Map* map)
 		for (int x = 0; x < map->width();x++)
 		{
 			current = nodeAt(sf::Vector2i(x, y));
+			//ADJACENTS
 			if (y > 0)
 			{
 				current->m_neighbours.push_back(nodeAt(sf::Vector2i(x, y - 1)));

@@ -4,39 +4,37 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <iostream>
+#include <nlohmann/json.hpp>
+#include <map>
 
-#include "Engine.h"
-#include "AI.h"
 #include "Stats.h"
-#include "Inventory.h"
 
-#include "HelperFunctions.h"
+using json = nlohmann::json;
+
 
 class Engine;
 class Inventory;
 class AI;
-
+class AnimationComponent;
 
 class Entity
 {
 public:
 	//Constructors & Destructors
-	Entity(sf::String name, sf::Vector2i pos, sf::Sprite sprite);
-	Entity(const Entity& copy);
 	Entity();
 	~Entity();
-	
+
 	//Accessors
 	sf::String name();
 	sf::Sprite* sprite();
 	sf::Vector2i pos(); 
 	Engine* engine();
-	int spriteSize();
+	static int spriteSize();
 	int attribute(sf::String attribute);
-	int skill(sf::String skill, bool skillUsed = false);
 	int currentResource(sf::String resource);
 	int maxResource(sf::String resource);
 	AI* ai();
+	Inventory* inventory();
 
 	//Mutators
 	void name(sf::String name);
@@ -50,18 +48,9 @@ public:
 	void maxResource(sf::String resource, int level);
 
 	//Functions
-	void update();
-	void FOV();
-
-
-	//Combat Functions
-	void attack(Entity* target);
-	int takeDamage(int damage);
-	void die();
-	bool died();
-	
-
-private:
+	void update(float elapsedTime);
+	void render(sf::RenderTarget* window, float elapsedTime);
+protected:
 	static Engine* m_engine;
 	sf::String m_name;
 	sf::Sprite m_sprite;
@@ -70,10 +59,10 @@ private:
 	std::unique_ptr<Inventory> m_inventory;
 
 	std::unique_ptr<AttributeComponent> m_attributes;
-	std::unique_ptr<SkillComponent> m_skills;
 	std::unique_ptr<ResourceComponent> m_resources;
+	std::unique_ptr<AnimationComponent> m_animation;
 	std::unique_ptr<AI> m_AI;
-	
+
 	static int m_spriteSize;
 };
 
